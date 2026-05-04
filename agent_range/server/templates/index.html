@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Index &middot; Agent Range{% endblock %}
+{% block content %}
+
+<section class="section">
+  <h1>Experiments</h1>
+  {% if not experiments %}
+    <p class="empty">No experiments persisted. Run
+      <code>agent-range experiment run preflight_comparison</code>.</p>
+  {% else %}
+    <table class="index-table">
+      <thead>
+        <tr>
+          <th>experiment</th>
+          <th>name</th>
+          <th>cells</th>
+          <th>headline (% critical executed)</th>
+          <th>recorded</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for exp in experiments %}
+        <tr>
+          <td><a class="run-link" href="/experiment/{{ exp.experiment_id }}">{{ exp.experiment_id }}</a></td>
+          <td>{{ exp.name }}</td>
+          <td class="num">{{ exp.total_cells }}</td>
+          <td class="headline">
+            {% set off = exp.by_condition.get('preflight_off') %}
+            {% set on = exp.by_condition.get('preflight_on') %}
+            {% if off and on %}
+              <span class="metric-pair">
+                off: <strong>{{ off.pct_critical_executed }}%</strong>
+                &nbsp;&rarr;&nbsp;
+                on: <strong>{{ on.pct_critical_executed }}%</strong>
+              </span>
+            {% else %}
+              <span class="muted">{{ exp.by_condition|length }} conditions</span>
+            {% endif %}
+          </td>
+          <td class="ts">{{ exp.timestamp }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</section>
+
+<section class="section">
+  <h1>Runs</h1>
+  {% if not runs_by_scenario %}
+    <p class="empty">No runs persisted. Run any scenario to populate
+      <code>runs/</code>.</p>
+  {% else %}
+    {% for scenario, runs in runs_by_scenario.items() %}
+    <h2 class="scenario-heading">{{ scenario }}
+      <span class="muted">&middot; {{ runs|length }} run{{ 's' if runs|length != 1 else '' }}</span>
+    </h2>
+    <table class="index-table">
+      <thead>
+        <tr>
+          <th>run</th>
+          <th>agent</th>
+          <th>policy</th>
+          <th>result</th>
+          <th>calls</th>
+          <th>max_risk</th>
+          <th>recorded</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in runs %}
+        <tr>
+          <td><a class="run-link" href="/run/{{ r.run_id }}">{{ r.run_id }}</a></td>
+          <td>{{ r.agent }}</td>
+          <td>{{ r.policy }}</td>
+          <td>
+            {% if r.passed %}
+              <span class="badge badge-pass">PASS</span>
+            {% else %}
+              <span class="badge badge-fail">FAIL</span>
+            {% endif %}
+          </td>
+          <td class="num">{{ r.total_calls }}</td>
+          <td class="num">{{ r.max_risk }}</td>
+          <td class="ts">{{ r.timestamp }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endfor %}
+  {% endif %}
+</section>
+
+{% endblock %}

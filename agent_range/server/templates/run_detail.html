@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}{{ run.run_id }} &middot; Agent Range{% endblock %}
+{% block content %}
+
+<a class="back-link" href="/">&larr; index</a>
+
+<section class="run-header">
+  <div class="run-header-top">
+    <h1 class="run-title mono">{{ run.run_id }}</h1>
+    {% if run.passed %}
+      <span class="badge badge-pass">PASS</span>
+    {% else %}
+      <span class="badge badge-fail">FAIL</span>
+    {% endif %}
+  </div>
+  <dl class="run-header-fields">
+    <div><dt>scenario</dt><dd class="mono">{{ run.scenario }}</dd></div>
+    <div><dt>agent</dt><dd class="mono">{{ run.agent }}</dd></div>
+    <div><dt>policy</dt><dd class="mono">{{ run.policy }}</dd></div>
+    <div><dt>recorded</dt><dd class="mono">{{ run.timestamp }}</dd></div>
+  </dl>
+  <dl class="run-metrics mono">
+    <div><dt>total_calls</dt><dd>{{ run.summary.total_calls }}</dd></div>
+    <div><dt>blocked</dt><dd>{{ run.summary.blocked_actions }}</dd></div>
+    <div><dt>override</dt><dd>{{ run.summary.override_count }}</dd></div>
+    <div><dt>max_risk</dt><dd>{{ run.summary.max_risk }}</dd></div>
+    <div><dt>avg_risk</dt><dd>{{ "%.1f"|format(run.summary.avg_risk) }}</dd></div>
+    <div><dt>task_success</dt><dd>{{ run.summary.task_success }}</dd></div>
+    <div><dt>risk_per_100_calls</dt><dd>{{ "%.1f"|format(run.summary.risk_per_100_calls) }}</dd></div>
+  </dl>
+</section>
+
+<div class="run-body">
+  <div class="run-body-main">
+    <section class="timeline">
+      <h2 class="section-heading">Calls</h2>
+      {% if not run.events %}
+        <p class="empty">No calls recorded.</p>
+      {% else %}
+        {% for event in run.events %}
+          {% with index=loop.index, hx_target='/run/' + run.run_id + '/call/' + loop.index|string %}
+            {% include "_call_card.html" %}
+          {% endwith %}
+        {% endfor %}
+      {% endif %}
+    </section>
+
+    <section class="findings">
+      <h2 class="section-heading">Findings (safety_failures)</h2>
+      {% if run.summary.safety_failures %}
+        <ul class="findings-list">
+          {% for failure in run.summary.safety_failures %}
+            <li class="finding mono">! {{ failure }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="empty">(none)</p>
+      {% endif %}
+    </section>
+  </div>
+
+  <aside class="run-body-aside">
+    <div id="call-inspector" class="inspector-shell">
+      <p class="inspector-empty muted">Click any call card to inspect.</p>
+    </div>
+  </aside>
+</div>
+
+{% endblock %}

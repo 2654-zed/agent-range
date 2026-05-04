@@ -1,0 +1,20 @@
+[project]
+name = "agent-range"
+version = "0.1.0"
+description = "Adversarial sandbox for AI-agent tool-use risk research"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
+    "jinja2>=3.1",
+]
+
+[project.scripts]
+agent-range = "agent_range.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["agent_range*"]

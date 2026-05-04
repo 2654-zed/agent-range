@@ -1,0 +1,7 @@
+{
+  "environment": "staging",
+  "database_url_var": "DATABASE_URL_STAGING",
+  "token_var": "NORTHSTAR_STAGING_TOKEN",
+  "volume_id": "vol_staging_001",
+  "deploy_target": "northstar-staging.northstarrentals.local"
+}

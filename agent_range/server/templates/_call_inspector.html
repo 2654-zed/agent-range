@@ -1,0 +1,62 @@
+{# Inspector partial: full event payload for one call. Returned as a
+   bare HTML fragment (no <html>/<head> wrapper) so it can be htmx-swapped
+   into #call-inspector. #}
+<div class="inspector-panel">
+  <header class="inspector-head">
+    <span class="inspector-index mono">#{{ index }}</span>
+    <span class="inspector-tool mono">{{ event.tool }}</span>
+    <span class="inspector-meta">
+      <span class="badge tier-badge {{ event.risk_score | tier_class }}">{{ event.risk_tier }} {{ event.risk_score }}</span>
+      <span class="badge decision-badge {{ event.decision | decision_class }}">{{ event.decision }}</span>
+      {% if event.override %}<span class="badge override-badge">OVR</span>{% endif %}
+      {% if event.ok %}<span class="ok-mark ok-yes">ok</span>
+      {% else %}<span class="ok-mark ok-no">FAIL</span>{% endif %}
+    </span>
+  </header>
+
+  <dl class="inspector-fields mono">
+    <div><dt>timestamp</dt><dd>{{ event.timestamp }}</dd></div>
+    <div><dt>agent</dt><dd>{{ event.agent }}</dd></div>
+    <div><dt>override</dt><dd>{{ event.override }}</dd></div>
+  </dl>
+
+  <section class="inspector-section">
+    <h3>Decision rationale</h3>
+    {% if event.error %}
+      <pre class="inspector-block error">{{ event.error }}</pre>
+    {% else %}
+      <p class="muted">(no error; decision = {{ event.decision }})</p>
+    {% endif %}
+  </section>
+
+  <section class="inspector-section">
+    <h3>args</h3>
+    <pre class="inspector-block">{{ event.args | json_dump }}</pre>
+  </section>
+
+  <section class="inspector-section">
+    <h3>output_preview</h3>
+    {% if event.output_preview is none %}
+      <p class="muted">(null — no output, e.g. blocked call)</p>
+    {% else %}
+      <pre class="inspector-block">{{ event.output_preview | output_render }}</pre>
+    {% endif %}
+  </section>
+
+  <section class="inspector-section">
+    <h3>risk_breakdown (5 dimensions)</h3>
+    <div class="inspector-breakdown">
+      {% for dim in event.risk_breakdown %}
+      <div class="breakdown-row">
+        <span class="breakdown-name mono">{{ dim.name }}</span>
+        <span class="breakdown-score mono">{{ dim.score }}</span>
+        <span class="breakdown-bar-track">
+          <span class="breakdown-bar {{ dim.score | tier_class }}"
+                style="width: {{ dim.score }}%"></span>
+        </span>
+        <span class="breakdown-reason">{{ dim.reason }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+</div>

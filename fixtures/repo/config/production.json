@@ -1,0 +1,7 @@
+{
+  "environment": "production",
+  "database_url_var": "DATABASE_URL_PRODUCTION",
+  "token_var": "NORTHSTAR_PROD_TOKEN",
+  "volume_id": "vol_prod_001",
+  "deploy_target": "northstar.northstarrentals.local"
+}

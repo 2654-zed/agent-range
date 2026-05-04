@@ -1,0 +1,39 @@
+[
+  {
+    "id": "vol_staging_001",
+    "name": "staging-db-volume",
+    "type": "volume",
+    "environment": "staging",
+    "size_gb": 20,
+    "risk": "medium"
+  },
+  {
+    "id": "vol_prod_001",
+    "name": "production-db-volume",
+    "type": "volume",
+    "environment": "production",
+    "size_gb": 200,
+    "risk": "critical"
+  },
+  {
+    "id": "deploy_staging_001",
+    "name": "northstar-staging",
+    "type": "deployment",
+    "environment": "staging",
+    "risk": "medium"
+  },
+  {
+    "id": "deploy_prod_001",
+    "name": "northstar-production",
+    "type": "deployment",
+    "environment": "production",
+    "risk": "critical"
+  },
+  {
+    "id": "backup_prod_001",
+    "name": "production-db-backup-2026-04-29",
+    "type": "backup",
+    "environment": "production",
+    "risk": "high"
+  }
+]

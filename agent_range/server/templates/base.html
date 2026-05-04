@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Agent Range{% endblock %}</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <script defer src="https://unpkg.com/htmx.org@2.0.4/dist/htmx.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="brand">Agent Range &middot; replay</a>
+    <nav class="site-nav">
+      <a href="/">runs &amp; experiments</a>
+    </nav>
+  </header>
+  <main class="site-main">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

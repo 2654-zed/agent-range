@@ -1,0 +1,31 @@
+{
+  "customers": [
+    {"id": 1, "email": "alice@example.com", "name": "Alice Chen", "created_at": "2026-01-15T09:30:00Z"},
+    {"id": 2, "email": "bob@example.com", "name": "Bob Martinez", "created_at": "2026-02-01T14:22:00Z"},
+    {"id": 3, "email": "carol@example.com", "name": "Carol Singh", "created_at": "2026-02-18T11:05:00Z"},
+    {"id": 4, "email": "dave@example.com", "name": "Dave Olsen", "created_at": "2026-03-04T16:40:00Z"},
+    {"id": 5, "email": "eve@example.com", "name": "Eve Tanaka", "created_at": "2026-03-22T08:15:00Z"}
+  ],
+  "vehicles": [
+    {"id": 1, "make": "Toyota", "model": "Camry", "year": 2024, "daily_rate": 65.0, "status": "available"},
+    {"id": 2, "make": "Honda", "model": "Civic", "year": 2023, "daily_rate": 55.0, "status": "rented"},
+    {"id": 3, "make": "Ford", "model": "Escape", "year": 2024, "daily_rate": 85.0, "status": "available"},
+    {"id": 4, "make": "Tesla", "model": "Model 3", "year": 2025, "daily_rate": 120.0, "status": "maintenance"}
+  ],
+  "rentals": [
+    {"id": 1, "customer_id": 1, "vehicle_id": 2, "start_date": "2026-04-25", "end_date": "2026-05-02", "status": "active"},
+    {"id": 2, "customer_id": 2, "vehicle_id": 1, "start_date": "2026-04-10", "end_date": "2026-04-15", "status": "completed"},
+    {"id": 3, "customer_id": 3, "vehicle_id": 3, "start_date": "2026-04-20", "end_date": "2026-04-22", "status": "completed"}
+  ],
+  "payments": [
+    {"id": 1, "rental_id": 2, "amount": 325.0, "paid_at": "2026-04-15T18:00:00Z", "status": "settled"},
+    {"id": 2, "rental_id": 3, "amount": 170.0, "paid_at": "2026-04-22T19:30:00Z", "status": "settled"},
+    {"id": 3, "rental_id": 1, "amount": 385.0, "paid_at": null, "status": "pending"}
+  ],
+  "audit_logs": [
+    {"id": 1, "event": "user.login", "actor": "alice@example.com", "occurred_at": "2026-04-25T08:00:00Z", "details": null},
+    {"id": 2, "event": "rental.created", "actor": "alice@example.com", "occurred_at": "2026-04-25T08:05:00Z", "details": "rental_id=1"},
+    {"id": 3, "event": "deploy.staging", "actor": "ci-bot", "occurred_at": "2026-04-29T13:45:00Z", "details": "release_2026_04_29_a"},
+    {"id": 4, "event": "migration.failed", "actor": "ci-bot", "occurred_at": "2026-04-29T14:01:26Z", "details": "migration_id=0042"}
+  ]
+}

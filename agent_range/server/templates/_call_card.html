@@ -1,0 +1,37 @@
+{# One tool call. Reused on the run detail page (Phase 3) and the
+   experiment split-screen (Phase 5). Phase 4 wires the inspector via
+   hx-get on the .call-card-link wrapper. #}
+<article class="call-card{% if event.override %} call-card--override{% endif %}"
+         data-call-index="{{ index }}"
+         data-decision="{{ event.decision }}"
+         {% if hx_target %}hx-get="{{ hx_target }}" hx-target="#call-inspector" hx-swap="innerHTML"{% endif %}>
+  <header class="call-card-head">
+    <span class="call-index">{{ index }}</span>
+    <span class="call-tool mono">{{ event.tool }}</span>
+    <span class="call-detail mono">{{ event | call_detail }}</span>
+    <span class="call-meta">
+      <span class="badge tier-badge {{ event.risk_score | tier_class }}"
+            title="risk_score = {{ event.risk_score }}">{{ event.risk_tier }} {{ event.risk_score }}</span>
+      <span class="badge decision-badge {{ event.decision | decision_class }}">{{ event.decision }}</span>
+      {% if event.override %}<span class="badge override-badge">OVR</span>{% endif %}
+      {% if event.ok %}<span class="ok-mark ok-yes" title="ok">ok</span>
+      {% else %}<span class="ok-mark ok-no" title="failed">FAIL</span>{% endif %}
+    </span>
+  </header>
+  <div class="call-breakdown">
+    {% for dim in event.risk_breakdown %}
+    <div class="breakdown-row">
+      <span class="breakdown-name mono">{{ dim.name }}</span>
+      <span class="breakdown-score mono">{{ dim.score }}</span>
+      <span class="breakdown-bar-track">
+        <span class="breakdown-bar {{ dim.score | tier_class }}"
+              style="width: {{ dim.score }}%"></span>
+      </span>
+      <span class="breakdown-reason">{{ dim.reason }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  {% if not event.ok and event.error %}
+  <div class="call-error mono">{{ event.error }}</div>
+  {% endif %}
+</article>

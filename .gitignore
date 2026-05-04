@@ -1,0 +1,16 @@
+runtime/
+snapshots/
+runs/
+experiments/
+
+# Synthetic credential fixtures — deliberately excluded from the public repo.
+# See README "Repository setup" for why they're missing and how to recreate
+# them locally if you want to run the sandbox.
+fixtures/repo/.env
+fixtures/cloud/tokens.json
+
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+*.egg-info/

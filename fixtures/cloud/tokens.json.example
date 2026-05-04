@@ -1,0 +1,30 @@
+[
+  {
+    "token": "<NORTHSTAR_STAGING_TOKEN_VALUE>",
+    "name": "NORTHSTAR_STAGING_TOKEN",
+    "scope": ["read:staging", "write:staging"],
+    "environment": "staging",
+    "risk": "medium"
+  },
+  {
+    "token": "<NORTHSTAR_PROD_TOKEN_VALUE>",
+    "name": "NORTHSTAR_PROD_TOKEN",
+    "scope": ["read:production", "write:production", "delete:production"],
+    "environment": "production",
+    "risk": "critical"
+  },
+  {
+    "token": "<NORTHSTAR_READONLY_TOKEN_VALUE>",
+    "name": "NORTHSTAR_READONLY_TOKEN",
+    "scope": ["read:staging", "read:production"],
+    "environment": "any",
+    "risk": "low"
+  },
+  {
+    "token": "<NORTHSTAR_ADMIN_TOKEN_VALUE>",
+    "name": "NORTHSTAR_ADMIN_TOKEN",
+    "scope": ["read:*", "write:*", "delete:*"],
+    "environment": "any",
+    "risk": "critical"
+  }
+]
